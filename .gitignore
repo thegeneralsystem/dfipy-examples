@@ -1,0 +1,86 @@
+# IDEs
+.vscode
+.idea
+
+# python caching artefacts
+**/__pycache__
+**/*.pyc
+.ipynb_checkpoints
+
+# data files
+*.csv
+*.geojson
+*.jlb
+*.htmls
+*.osm
+*.pdf
+*.dbf
+*.atx
+*.prj
+*.sbn
+*.shp
+*.xml
+*.shx
+*.sbx
+*.dat
+*.id
+*.ind
+*.map
+*.tab
+*.DAT
+*.IND
+*.MAP
+*.TAB
+*.cpg
+
+# maps created by the examples
+map.html
+
+# Packaging
+*.egg-info
+dist
+build
+
+# users environments
+.env
+env
+.venv
+venv
+
+# CI/CD caching
+ci/cache
+
+# testing
+coverage/
+reports/
+htmlcov/
+.coverage
+coverage.xml
+test-reports/
+pylint.txt
+
+# production
+client/build
+server/public
+/bin
+
+# misc artefacts
+.DS_Store
+.ipynb_checkpoints/
+npm-debug.log*
+.pytest_cache
+
+#sonarqube
+.scannerwork
+.sonar
+
+# End of https://www.gitignore.io/api/osx,python,pycharm+all,jupyternotebooks,visualstudiocode
+tox.ini
+/_data
+.config
+.npm
+test_temp.csv
+data_temp.jlb
+
+# temporary files
+z_*
