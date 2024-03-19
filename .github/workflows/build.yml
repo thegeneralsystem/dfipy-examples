@@ -1,0 +1,50 @@
+name: "Release"
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  # Builds docker image to serve as a binderhub base image which should reduce build times when opening notebooks.
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/thegeneralsystem/dfipy-examples
+          labels: |
+            org.opencontainers.image.authors=General System
+            org.opencontainers.image.title=BinderHub base image
+            org.opencontainers.image.description=Contains prebuild dependencies to speed up Binderhub builds
+          tags: |
+            type=sha
+            type=raw,value=binderhub-base
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          file: Dockerfile.binderhub
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
