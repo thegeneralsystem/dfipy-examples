@@ -1,0 +1,7 @@
+altair==4.2.2
+dfipy==1.0.1
+geopandas==0.13.2
+h3==3.7.6
+keplergl==0.3.2
+pyspark==3.4.1
+shapely==2.0.1

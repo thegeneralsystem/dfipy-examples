@@ -1,0 +1,109 @@
+[tool.poetry]
+name = "dfipyexamples"
+# Package versions are derived from Git tags in CI and overridden during
+# building/publishing. 
+# Keep the following version at 0.0.0 as it is not used anyway.
+version = "0.0.0"
+description = "Example and tutorials to use the DFI API via python wrappers"
+authors = [
+    "Maurizio Morriello <maurizio.morriello@generalsystem.com>",
+    "Sebastiano Ferraris <sebastiano.ferraris@generalsystem.com>",
+]
+readme = "README.md"
+
+packages = [{ include = "examples" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10.0,<3.13"
+geopandas = "^0.13.2"
+h3 = "^3.7.6"
+ipykernel = "^6.26.0"
+keplergl = "^0.3.2"
+tqdm = "^4.66.1"
+ipython = "^8.17.2"
+pandas = "^2.1.2"
+notebook = "^7.0.6"
+poetry-plugin-export = "^1.6.0"
+setuptools = "^69.2.0"
+dfipy = "^9.0.1"
+jupyterlab = "^4.2.1"
+
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^2.0.4"
+black = {extras = ["jupyter"], version = "*"}
+flake8 = "^6.1.0"
+mypy = "^1.6.1"
+nbqa = {extras = ["toolchain"], version = "*"}
+pylint = "^3.0.2"
+types-requests = "^2.31.0.10"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+exclude = ["^build/", "^tests/", "^docs/", "^ci/"]
+disable_error_code = ["name-defined"]
+check_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+install_types = true
+non_interactive = true
+pretty = true
+show_column_numbers = true
+show_error_context = true
+show_error_end = true
+warn_return_any = true
+warn_unreachable = true
+
+[tool.black]
+line-length = 120
+target-version = ['py310']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+
+    # The following are specific to Black, you probably don't want those.
+    | blib2to3
+    | tests/data
+)/
+'''
+
+[tool.isort]
+profile = "black"
+py_version = "310"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 120
+src_paths = ["./dfi", "./tests"]
+skip_glob = ["ci/cache"]
+
+
+[tool.pylint.'MASTER']
+jobs = 0       # use all cores
+fail-under = 9
+
+[tool.pylint.'MESSAGES CONTROL']
+max-line-length = 120
+
+disable = [
+  "C0114", # missing-module-docstring
+  "C0116", # missing-docstring
+  "C0103", # invalid-name
+  "C0301", # line-too-long
+  "C0412", # ungrouped-imports
+  "R0801", # similar-lines
+  "W0104", # pointless-statement
+]

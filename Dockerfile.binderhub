@@ -1,0 +1,28 @@
+# https://mybinder.readthedocs.io/en/latest/tutorials/dockerfile.html
+
+FROM python:3.11-slim
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+    gcc g++ libpq-dev gdal-bin libgdal-dev python3-dev npm
+
+# install the notebook package globally
+RUN pip install --no-cache --upgrade pip && \
+    pip install --no-cache notebook jupyterlab
+
+# create user with a home directory
+RUN addgroup --gid 1000 binder && \
+    adduser --disabled-password --gecos "Default user" --uid 1000 --gid 1000 binder
+
+WORKDIR /home/binder
+USER binder
+
+ENV HOME /home/binder
+
+RUN pip install --no-cache-dir --user notebook==6.5.4 jupyterlab==3.4.7
+
+COPY --chown=1000:1000 requirements.txt /home/binder
+
+# Install Python libraries and setup JupyterLab extensions
+RUN pip install --no-cache-dir --user -r requirements.txt
+
